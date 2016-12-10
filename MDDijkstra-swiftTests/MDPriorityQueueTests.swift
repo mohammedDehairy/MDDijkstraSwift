@@ -32,7 +32,6 @@ class MDPriorityQueueTests: XCTestCase {
             queue.addObject(obj: i)
         }
         
-        
         for i in 0..<600{
             let min = queue.removeMinObject()
             XCTAssertTrue((min?.isEqual(to: NSNumber(value: i)))!)

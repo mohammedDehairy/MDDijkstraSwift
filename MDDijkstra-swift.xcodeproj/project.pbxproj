@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		3D24D5201DFC2C9A009ACB4B /* MDPriorityQueueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D24D51F1DFC2C9A009ACB4B /* MDPriorityQueueTests.swift */; };
+		3D2EA33D1DFC623F001872CA /* MDGraphNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D2EA33C1DFC623F001872CA /* MDGraphNode.swift */; };
+		3D2EA33F1DFC6351001872CA /* MDRouteNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D2EA33E1DFC6351001872CA /* MDRouteNode.swift */; };
+		3D2EA3411DFC641D001872CA /* MDDijkstra.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D2EA3401DFC641D001872CA /* MDDijkstra.swift */; };
 		3D79AD3C1DF9A4D10042A8F2 /* MDDijkstraSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D79AD321DF9A4D00042A8F2 /* MDDijkstraSwift.framework */; };
 		3D79AD411DF9A4D10042A8F2 /* MDDijkstra_swiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D79AD401DF9A4D10042A8F2 /* MDDijkstra_swiftTests.swift */; };
 		3D79AD431DF9A4D10042A8F2 /* MDDijkstra-swift.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D79AD351DF9A4D00042A8F2 /* MDDijkstra-swift.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -26,6 +29,9 @@
 
 /* Begin PBXFileReference section */
 		3D24D51F1DFC2C9A009ACB4B /* MDPriorityQueueTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MDPriorityQueueTests.swift; sourceTree = "<group>"; };
+		3D2EA33C1DFC623F001872CA /* MDGraphNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MDGraphNode.swift; sourceTree = "<group>"; };
+		3D2EA33E1DFC6351001872CA /* MDRouteNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MDRouteNode.swift; sourceTree = "<group>"; };
+		3D2EA3401DFC641D001872CA /* MDDijkstra.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MDDijkstra.swift; sourceTree = "<group>"; };
 		3D79AD321DF9A4D00042A8F2 /* MDDijkstraSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MDDijkstraSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D79AD351DF9A4D00042A8F2 /* MDDijkstra-swift.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MDDijkstra-swift.h"; sourceTree = "<group>"; };
 		3D79AD361DF9A4D00042A8F2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -78,6 +84,9 @@
 				3D79AD351DF9A4D00042A8F2 /* MDDijkstra-swift.h */,
 				3D79AD361DF9A4D00042A8F2 /* Info.plist */,
 				3D79AD4C1DF9A51D0042A8F2 /* MDPriorityQueue.swift */,
+				3D2EA33C1DFC623F001872CA /* MDGraphNode.swift */,
+				3D2EA33E1DFC6351001872CA /* MDRouteNode.swift */,
+				3D2EA3401DFC641D001872CA /* MDDijkstra.swift */,
 			);
 			path = "MDDijkstra-swift";
 			sourceTree = "<group>";
@@ -205,7 +214,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3D2EA3411DFC641D001872CA /* MDDijkstra.swift in Sources */,
+				3D2EA33F1DFC6351001872CA /* MDRouteNode.swift in Sources */,
 				3D79AD4D1DF9A51D0042A8F2 /* MDPriorityQueue.swift in Sources */,
+				3D2EA33D1DFC623F001872CA /* MDGraphNode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
