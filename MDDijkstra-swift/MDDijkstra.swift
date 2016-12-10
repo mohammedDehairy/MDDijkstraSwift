@@ -41,7 +41,7 @@ public class MDDijkstra: NSObject {
         
         // Add the start node to the queue
         let startRouteNode = MDRouteNode(graphNodeIndex: startIndex, weight: 0.0)
-        queue.addObject(obj: startRouteNode)
+        queue.addItem(item: startRouteNode)
         
         // The result route node
         var resultRouteNode : MDRouteNode?
@@ -49,7 +49,7 @@ public class MDDijkstra: NSObject {
         while queue.count() != 0 {
             
             // Get the minimum weight route node
-            let routeNode = queue.removeMinObject()!
+            let routeNode = queue.removeMinItem()!
             
             
             // Make sure not to go in loops
@@ -76,7 +76,7 @@ public class MDDijkstra: NSObject {
                 
                 let adjacentRouteNode = MDRouteNode(graphNodeIndex: adjacentGraphNodeIndex, weight: routeNode.weight+weight)
                 adjacentRouteNode.nextNode! = routeNode as! MDGraphNode
-                queue.addObject(obj: adjacentRouteNode)
+                queue.addItem(item: adjacentRouteNode)
             }
         }
         

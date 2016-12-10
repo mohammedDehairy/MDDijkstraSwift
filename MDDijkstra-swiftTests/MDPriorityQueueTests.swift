@@ -22,33 +22,38 @@ class MDPriorityQueueTests: XCTestCase {
     }
     
     func testAddObject() {
-        let queue = MDPriorityQueue<NSNumber>(comparatorBlock: {(num1 : NSNumber, num2 : NSNumber)->ComparisonResult in
-            num1.compare(num2)
+        let queue = MDPriorityQueue<Int>(comparatorBlock: {(num1 : Int, num2 : Int)->ComparisonResult in
+            if num1 > num2{
+                return .orderedDescending
+            }else if num1 < num2{
+                return .orderedAscending
+            }else{
+                return .orderedSame
+            }
         })
         
         let array = generateRandomlyShuffledArray()
         
         for i in array{
-            queue.addObject(obj: i)
+            queue.addItem(item: i)
         }
         
         for i in 0..<600{
-            let min = queue.removeMinObject()
-            XCTAssertTrue((min?.isEqual(to: NSNumber(value: i)))!)
+            let min = queue.removeMinItem()
+            XCTAssertTrue(min == i)
         }
     }
     
-    func generateRandomlyShuffledArray()->[NSNumber]{
-        var array = [NSNumber]()
+    func generateRandomlyShuffledArray()->[Int]{
+        var array = [Int]()
         for i in 0 ..< 600{
-            let num = NSNumber(value: i)
-            array.append(num)
+            array.append(i)
         }
         
-        return shuffle(array: array) as! [NSNumber]
+        return shuffle(array: array) as! [Int]
     }
     
-    func shuffle( array : [AnyObject])->[AnyObject]{
+    func shuffle( array : [Any])->[Any]{
         var array = array
         for i in 0..<array.count{
             let remaining = array.count-i

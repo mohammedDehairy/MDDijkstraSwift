@@ -8,8 +8,8 @@
 
 import UIKit
 
-class MDPriorityQueue<T : AnyObject>: NSObject {
-    var array : [AnyObject] = [AnyObject]()
+public class MDPriorityQueue<T>: NSObject {
+    var array : [Any] = [Any]()
     
     let comparatorBlock : (_ obj1 : T,_ obj2 : T)->(ComparisonResult)
     
@@ -20,8 +20,8 @@ class MDPriorityQueue<T : AnyObject>: NSObject {
         
     }
     
-    public func addObject(obj : T) -> Void {
-        array.append(obj)
+    public func addItem(item : T) -> Void {
+        array.append(item)
         self.floatObject(atIndex: array.count-1)
     }
     
@@ -29,14 +29,14 @@ class MDPriorityQueue<T : AnyObject>: NSObject {
         return array.count-1
     }
     
-    public func peakMinObject()->T?{
+    public func peakMinItem()->T?{
         if(self.count() == 0){
             return nil
         }
         return array[1] as? T
     }
     
-    public func removeMinObject()->T?{
+    public func removeMinItem()->T?{
         if self.count() == 0{
             return nil
         }
@@ -124,7 +124,7 @@ class MDPriorityQueue<T : AnyObject>: NSObject {
         }
 
         // Sort children array, according to the self.comparatorBlock closure
-        children = children.sorted(by: { (obj1 :AnyObject,obj2 : AnyObject)->Bool in
+        children = children.sorted(by: { (obj1 :Any,obj2 : Any)->Bool in
         
             return comparatorBlock(obj1 as! T,obj2 as! T) == .orderedAscending
         })
