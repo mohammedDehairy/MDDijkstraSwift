@@ -9,7 +9,7 @@
 import UIKit
 
 class MDPriorityQueue<T : AnyObject>: NSObject {
-    lazy var array : [AnyObject] = [AnyObject]()
+    var array : [AnyObject] = [AnyObject]()
     
     let comparatorBlock : (_ obj1 : T,_ obj2 : T)->(ComparisonResult)
     
@@ -41,10 +41,10 @@ class MDPriorityQueue<T : AnyObject>: NSObject {
             return nil
         }
         
-        var iArray = self.array
-        
-        // Swap min object at index 1 with last object
-        swap(&iArray[1], &iArray[array.count-1])
+        if self.array.count > 2{
+            // Swap min object at index 1 with last object
+            swap(&self.array[1], &self.array[array.count-1])
+        }
         
         // remove last object (min object)
         let minObject = self.array.removeLast()
@@ -81,8 +81,7 @@ class MDPriorityQueue<T : AnyObject>: NSObject {
         
         // If parent is greater than child, then swap them, And recurse
         if(comparison == ComparisonResult.orderedDescending){
-            var iArray = array
-            swap(&iArray[parentIndex], &iArray[childIndex])
+            swap(&self.array[parentIndex], &self.array[childIndex])
             self.floatObject(atIndex: parentIndex)
         }
     }
@@ -127,28 +126,26 @@ class MDPriorityQueue<T : AnyObject>: NSObject {
         // Sort children array, according to the self.comparatorBlock closure
         children = children.sorted(by: { (obj1 :AnyObject,obj2 : AnyObject)->Bool in
         
-            return comparatorBlock(obj1 as! T,obj2 as! T) == .orderedDescending
+            return comparatorBlock(obj1 as! T,obj2 as! T) == .orderedAscending
         })
         
         // Sort children indexes array, according to the self.comparatorBlock closure
         childrenIndexes = childrenIndexes.sorted(by: { (i1 :Int,i2 : Int)->Bool in
             let obj1 = array[i1]
             let obj2 = array[i2]
-            return comparatorBlock(obj1 as! T,obj2 as! T) == .orderedDescending
+            return comparatorBlock(obj1 as! T,obj2 as! T) == .orderedAscending
         })
         
         
         // Compare parent to the minimum child
         if comparatorBlock(parent!,children[0]) == .orderedDescending{
             // If parent is greater than the minimum child, then swap and recurse
-            var iArray = array
-            swap(&iArray[atIndex], &iArray[childrenIndexes[0]])
+            swap(&array[atIndex], &array[childrenIndexes[0]])
             sinkObject(atIndex: childrenIndexes[0])
         }else if children.count == 2{
             // If parent is less than the minimum child, but greater than the max child, then swap with the max child and recurse 
             if comparatorBlock(parent!,children[1]) == .orderedDescending{
-                var iArray = array
-                swap(&iArray[atIndex], &iArray[childrenIndexes[1]])
+                swap(&array[atIndex], &array[childrenIndexes[1]])
                 sinkObject(atIndex: childrenIndexes[1])
             }
         }
