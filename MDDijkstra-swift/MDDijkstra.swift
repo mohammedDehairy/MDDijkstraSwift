@@ -75,11 +75,23 @@ public class MDDijkstra: NSObject {
                 let weight = graphNode.adjacentNodesWeights[i]
                 
                 let adjacentRouteNode = MDRouteNode(graphNodeIndex: adjacentGraphNodeIndex, weight: routeNode.weight+weight)
-                adjacentRouteNode.nextNode! = routeNode as! MDGraphNode
+                adjacentRouteNode.nextNode = routeNode
                 queue.addItem(item: adjacentRouteNode)
             }
         }
         
-        return resultRouteNode
+        return self.reverseRoute(routeNode: resultRouteNode)
+    }
+    
+    private func reverseRoute(routeNode : MDRouteNode?)->MDRouteNode?{
+        var head = routeNode?.nextNode
+        var preNode = routeNode
+        while(head != nil){
+            let next = head?.nextNode
+            head?.nextNode = preNode
+            preNode = head
+            head = next
+        }
+        return preNode
     }
 }

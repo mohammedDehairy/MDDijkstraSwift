@@ -11,7 +11,7 @@ import UIKit
 public class MDRouteNode: NSObject {
     public let graphNodeIndex : Int
     public let weight : Double
-    public var nextNode : MDGraphNode?
+    public var nextNode : MDRouteNode?
     internal var visited = false
     
     init(graphNodeIndex : Int,weight : Double) {

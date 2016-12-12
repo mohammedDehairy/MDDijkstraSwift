@@ -1,15 +1,14 @@
 //
-//  MDDijkstra_swiftTests.swift
-//  MDDijkstra-swiftTests
+//  MDDijkstraTests.swift
+//  MDDijkstra-swift
 //
-//  Created by mohamed mohamed El Dehairy on 12/8/16.
+//  Created by mohamed mohamed El Dehairy on 12/12/16.
 //  Copyright © 2016 mohamed El Dehairy. All rights reserved.
 //
 
 import XCTest
-@testable import MDDijkstraSwift
 
-class MDDijkstra_swiftTests: XCTestCase {
+class MDDijkstraTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
