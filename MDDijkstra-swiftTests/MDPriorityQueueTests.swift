@@ -21,6 +21,32 @@ class MDPriorityQueueTests: XCTestCase {
         super.tearDown()
     }
     
+    
+    func testMaxHeap(){
+        let queue = MDPriorityQueue<Int>()
+        queue.customComparator = {(i1 : Int,i2 : Int)->ComparisonResult in
+            if i1 > i2 {
+                return .orderedAscending
+            }else if i2 > i1 {
+                return .orderedDescending
+            }else {
+                return .orderedSame
+            }
+        }
+        
+        let array = generateRandomlyShuffledArray()
+        
+        for i in array{
+            queue.addItem(item: i)
+        }
+        
+        var i = 599
+        for max in queue{
+            XCTAssertTrue(max == i)
+            i-=1
+        }
+    }
+    
     func testAddObject() {
         let queue = MDPriorityQueue<Int>()
         
@@ -30,9 +56,10 @@ class MDPriorityQueueTests: XCTestCase {
             queue.addItem(item: i)
         }
         
-        for i in 0..<600{
-            let min = queue.removeMinItem()
+        var i = 0
+        for min in queue{
             XCTAssertTrue(min == i)
+            i+=1
         }
     }
     

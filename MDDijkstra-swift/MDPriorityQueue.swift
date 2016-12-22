@@ -8,13 +8,25 @@
 
 import UIKit
 
+/**
+    Swift implementation of a priority queue (Heap), its default implementation is a Min priority queue.
+ 
+    Its default implementation is a Min priority queue, but by setting the customComparator block you can make a max heap on demand, i.e if customComparator instance variable is not nil it will be used instead of the default Comparable protocol implementation of the generic type.
+ */
 public class MDPriorityQueue<T : Comparable>: NSObject {
-    var array : [Any] = [Any]()
     
-    override init() {
+    private var array : [Any] = [Any]()
+    
+    public var customComparator : ((_ obj1 : T, _ obj2 : T)->ComparisonResult)?
+    
+    override convenience init() {
+        self.init(customComparator: nil)
+    }
+    
+    init(customComparator : ((_ obj1 : T, _ obj2 : T)->ComparisonResult)?) {
         super.init()
         array.append(NSNull())
-        
+        self.customComparator = customComparator
     }
     
     public func addItem(item : T) -> Void {
@@ -72,9 +84,13 @@ public class MDPriorityQueue<T : Comparable>: NSObject {
         // Child item
         let child = array[childIndex] as! T
         
-        
         // If parent is greater than child, then swap them, And recurse
-        if(parent > child) {
+        if let comparison = customComparator?(parent,child){
+            if comparison == .orderedDescending {
+                swap(&self.array[parentIndex], &self.array[childIndex])
+                self.floatObject(atIndex: parentIndex)
+            }
+        }else if parent > child{
             swap(&self.array[parentIndex], &self.array[childIndex])
             self.floatObject(atIndex: parentIndex)
         }
@@ -118,18 +134,35 @@ public class MDPriorityQueue<T : Comparable>: NSObject {
         }
 
         // Sort children array
-        children = children.sorted()
+        if let comparator = customComparator{
+            children = children.sorted(by: { (obj1 : T,obj2 : T)->Bool in
+                return comparator(obj1,obj2) == .orderedAscending
+            })
+        }else{
+            children = children.sorted()
+        }
+        
         
         // Sort children indexes array, according to the their corresponding items in tha array
         childrenIndexes = childrenIndexes.sorted(by: { (i1 :Int,i2 : Int)->Bool in
             let obj1 = array[i1] as! T
             let obj2 = array[i2] as! T
-            return obj1 < obj2
+            if let comparator = customComparator{
+                return comparator(obj1,obj2) == .orderedAscending
+            }else {
+                return obj1 < obj2
+            }
         })
         
         
         // Compare parent to the minimum child
-        if parent > children[0]{
+        if let comparator = customComparator {
+            if comparator(parent,children[0]) == .orderedDescending{
+                // If parent is greater than the minimum child, then swap and recurse
+                swap(&array[atIndex], &array[childrenIndexes[0]])
+                sinkObject(atIndex: childrenIndexes[0])
+            }
+        }else if parent > children[0] {
             // If parent is greater than the minimum child, then swap and recurse
             swap(&array[atIndex], &array[childrenIndexes[0]])
             sinkObject(atIndex: childrenIndexes[0])
