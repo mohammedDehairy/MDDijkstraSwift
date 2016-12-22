@@ -44,15 +44,7 @@ public class MDDijkstra: NSObject {
         }
         
         // Declare the priority queue
-        let queue = MDPriorityQueue<MDRouteNode>(comparatorBlock: {(node1 : MDRouteNode,node2 : MDRouteNode)->ComparisonResult in
-            if node1.weight > node2.weight {
-                return .orderedDescending
-            }else if node1.weight < node2.weight{
-                return .orderedAscending
-            }else{
-                return .orderedSame
-            }
-        })
+        let queue = MDPriorityQueue<MDRouteNode>()
         
         // Add the start node to the queue
         let startRouteNode = MDRouteNode(graphNodeIndex: startIndex, weight: 0.0)

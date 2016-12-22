@@ -8,13 +8,10 @@
 
 import UIKit
 
-public class MDPriorityQueue<T>: NSObject {
+public class MDPriorityQueue<T : Comparable>: NSObject {
     var array : [Any] = [Any]()
     
-    let comparatorBlock : (_ obj1 : T,_ obj2 : T)->(ComparisonResult)
-    
-    init(comparatorBlock : @escaping (_ obj1 : T,_ obj2 : T)->(ComparisonResult)) {
-        self.comparatorBlock = comparatorBlock
+    override init() {
         super.init()
         array.append(NSNull())
         
@@ -75,12 +72,9 @@ public class MDPriorityQueue<T>: NSObject {
         // Child item
         let child = array[childIndex] as! T
         
-        // Compare child and parent
-        let comparison = self.comparatorBlock(parent,child)
-        
         
         // If parent is greater than child, then swap them, And recurse
-        if(comparison == ComparisonResult.orderedDescending){
+        if(parent > child) {
             swap(&self.array[parentIndex], &self.array[childIndex])
             self.floatObject(atIndex: parentIndex)
         }
@@ -96,7 +90,7 @@ public class MDPriorityQueue<T>: NSObject {
         }
         
         // Parent item
-        let parent = array[atIndex] as? T
+        let parent = array[atIndex] as! T
         
         // Left and Right children
         let leftChildIndex = atIndex * 2
@@ -123,33 +117,30 @@ public class MDPriorityQueue<T>: NSObject {
             return
         }
 
-        // Sort children array, according to the self.comparatorBlock closure
-        children = children.sorted(by: { (obj1 :Any,obj2 : Any)->Bool in
+        // Sort children array
+        children = children.sorted()
         
-            return comparatorBlock(obj1 as! T,obj2 as! T) == .orderedAscending
-        })
-        
-        // Sort children indexes array, according to the self.comparatorBlock closure
+        // Sort children indexes array, according to the their corresponding items in tha array
         childrenIndexes = childrenIndexes.sorted(by: { (i1 :Int,i2 : Int)->Bool in
-            let obj1 = array[i1]
-            let obj2 = array[i2]
-            return comparatorBlock(obj1 as! T,obj2 as! T) == .orderedAscending
+            let obj1 = array[i1] as! T
+            let obj2 = array[i2] as! T
+            return obj1 < obj2
         })
         
         
         // Compare parent to the minimum child
-        if comparatorBlock(parent!,children[0]) == .orderedDescending{
+        if parent > children[0]{
             // If parent is greater than the minimum child, then swap and recurse
             swap(&array[atIndex], &array[childrenIndexes[0]])
             sinkObject(atIndex: childrenIndexes[0])
-        }else if children.count == 2{
-            // If parent is less than the minimum child, but greater than the max child, then swap with the max child and recurse 
-            if comparatorBlock(parent!,children[1]) == .orderedDescending{
-                swap(&array[atIndex], &array[childrenIndexes[1]])
-                sinkObject(atIndex: childrenIndexes[1])
-            }
         }
         
     }
     
+}
+
+extension MDPriorityQueue : Sequence, IteratorProtocol{
+    public func next() -> T? {
+        return self.removeMinItem()
+    }
 }

@@ -20,3 +20,13 @@ public class MDRouteNode: NSObject {
         super.init()
     }
 }
+
+extension MDRouteNode : Comparable{
+    public static func <(lhs : MDRouteNode, rhs : MDRouteNode)->Bool{
+        return lhs.weight < rhs.weight
+    }
+    
+    public static func ==(lhs : MDRouteNode, rhs : MDRouteNode)->Bool{
+        return lhs.weight == rhs.weight
+    }
+}

@@ -22,15 +22,7 @@ class MDPriorityQueueTests: XCTestCase {
     }
     
     func testAddObject() {
-        let queue = MDPriorityQueue<Int>(comparatorBlock: {(num1 : Int, num2 : Int)->ComparisonResult in
-            if num1 > num2{
-                return .orderedDescending
-            }else if num1 < num2{
-                return .orderedAscending
-            }else{
-                return .orderedSame
-            }
-        })
+        let queue = MDPriorityQueue<Int>()
         
         let array = generateRandomlyShuffledArray()
         
